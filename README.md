@@ -1,51 +1,51 @@
-🔹 Project Title
+# Social-to-Lead Agentic Workflow – AutoStream AI Agent
 
-Social-to-Lead Agentic Workflow – AutoStream AI Agent
+## Overview
+This project implements a conversational AI agent for a SaaS product called AutoStream. The agent can understand user intent, answer product-related queries using a knowledge base, and capture high-intent users as leads through a structured workflow.
 
-🔹 Overview
+## Features
+- Intent detection (greeting, pricing inquiry, high-intent)
+- Retrieval-based responses using a local JSON knowledge base
+- Multi-turn conversation with state management
+- Lead capture workflow
+- Controlled tool execution
 
-This project implements a conversational AI agent for a SaaS product called AutoStream. The agent is capable of understanding user intent, answering product-related queries using a knowledge base, and capturing high-intent leads through a structured conversational workflow.
+## Tech Stack
+- Python 3.11
+- LangGraph
+- LangChain (light usage)
+- JSON (knowledge base)
 
-🔹 Features
-Intent detection (greeting, pricing, high-intent)
-RAG-based knowledge retrieval from local JSON
-Multi-turn conversation with state management
-Lead capture workflow
-Controlled tool execution
-🔹 Tech Stack
-Python 3.11
-LangGraph
-LangChain (light usage)
-JSON (knowledge base)
-🔹 How to Run
-# Create virtual environment
+## How to Run
+
+1. Create a virtual environment:
+```bash
 python -m venv venv
-
-# Activate
+Activate the environment:
 venv\Scripts\activate
-
-# Install dependencies
+Install dependencies:
 pip install -r requirements.txt
-
-# Run
+Run the agent:
 python main.py
 
-🔹 Architecture
+## Architecture
 
-The system is built using LangGraph to model the conversational workflow as a directed graph. Each stage of the agent—intent detection, response generation, lead collection, and tool execution—is implemented as a separate node. The graph uses conditional routing based on detected user intent to decide the next step in the workflow.
+The agent is implemented using LangGraph, where the workflow is modeled as a graph of nodes. Each node represents a specific task such as intent detection, knowledge retrieval, lead collection, or tool execution.
 
-A shared state object is used to maintain context across multiple conversation turns, enabling the agent to remember user inputs such as name, email, and platform. This ensures proper multi-turn interaction and prevents loss of context.
+Based on user input, the agent first identifies intent and routes the conversation accordingly. For pricing-related queries, information is retrieved from a local JSON knowledge base instead of being hardcoded.
 
-The agent uses a simple Retrieval-Augmented Generation (RAG) approach by fetching pricing and policy information from a local JSON knowledge base. This avoids hardcoded responses and improves maintainability.
+When a high-intent user is detected, the system transitions into a lead collection flow. A shared state object is used to maintain context across multiple turns, allowing the agent to collect details such as name, email, and platform step by step.
 
-Tool execution is handled through a mock function that simulates lead capture. The system ensures that the tool is only triggered after all required user details are collected, preventing premature execution.
+Once all required information is collected, a tool function is triggered to simulate lead capture. The system ensures that this action only occurs after complete data collection.
 
-This modular design makes the system scalable, maintainable, and suitable for real-world deployment.
+This design keeps the system modular, easy to maintain, and suitable for real-world applications.
 
-🔹 WhatsApp Integration (Webhook Answer)
+## WhatsApp Integration (Design)
 
-To integrate this agent with WhatsApp, we can use the WhatsApp Business API along with a backend server (e.g., Flask or FastAPI). Incoming user messages are received via webhooks and forwarded to the agent.
+This project does not currently include WhatsApp integration, but it can be extended using the WhatsApp Business API.
 
-The backend processes the message, passes it through the LangGraph workflow, and generates a response. This response is then sent back to the user via the WhatsApp API.
+A backend service (such as Flask or FastAPI) can be used to receive incoming messages via webhooks. These messages would be passed to the agent, which processes them using the LangGraph workflow and generates a response.
 
-State management can be handled using a session store (e.g., Redis or database) to track user conversations across messages. This ensures continuity in multi-turn interactions.
+The response can then be sent back to the user through the WhatsApp API. To support multi-turn conversations, user state can be stored in a database or cache (e.g., Redis), ensuring continuity across interactions.
+
+
